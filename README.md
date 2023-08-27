@@ -1,2 +1,2 @@
 # Projeto-Lojinha
-Aplicação web de "Lojinha", segundo semestre de 2023, DWS-2
+Esta aplicação foi desenvolvida para a disciplina de Desenvolvimento de Web Sites do Instituto Federal de São Paulo - Campus Votuporanga e seu objetivo é a criação de um sistema de gerenciamento de uma loja de produtos gerais. Todo desenvolvido em PHP puro, o sistema possui páginas com ligação ao banco de dados, inserção, alteração, listagem e exclusão de dados com o banco MySQL e também possui um sistema de verificação com login e sessões.
