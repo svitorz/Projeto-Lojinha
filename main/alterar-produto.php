@@ -19,7 +19,7 @@ echo "<p>Descrição: $descricao";
 echo "<p>Link:<a href='$urlfoto' target='_blank'> $urlfoto</a>";
 
 /**
- *  UPDATE `produtos` SET `id`='[value-1]',`nome`='[value-2]',`urlfoto`='[value-3]',`descricao`='[value-4]' WHERE 1
+ *  UPDATE produtos SET id='[value-1]',nome='[value-2]',urlfoto='[value-3]',descricao='[value-4]' WHERE 1
  * 
  */
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'autenticacao.php';
+require 'logica.php';
 
 if(!autenticado()){
   $_SESSION['restrito'] = true;
@@ -15,7 +15,7 @@ require_once 'header.php';
 
 require 'conexao.php';
 
-$sql = "SELECT `id`,`nome`,`email` FROM `usuarios` ORDER BY nome";
+$sql = "SELECT id,nome,email FROM usuarios ORDER BY nome";
 $stmt = $conn->query($sql);
 ?>
 

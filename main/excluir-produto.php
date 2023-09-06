@@ -9,7 +9,7 @@ require 'conexao.php';
 
 $id = filter_input(INPUT_GET,"id", FILTER_SANITIZE_NUMBER_INT);
 /**
- *  DELETE FROM `produtos` WHERE 0
+ *  DELETE FROM produtos WHERE 0
  * 
  */
 echo "<p class='fs-2'>Registro excluído: $id</p>";

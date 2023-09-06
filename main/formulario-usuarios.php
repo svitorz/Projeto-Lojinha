@@ -9,6 +9,7 @@ require 'header.php';
 
 ?>
 <script>
+
     function verifica_senhas() {
         var senha = document.getElementById("senha");
         var confsenha = document.getElementById("confsenha");
@@ -38,11 +39,11 @@ require 'header.php';
             </div>
             <div class="mb-3">
                 <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" required>
+                <input type="password" class="form-control" id="senha" name="senha" required/>
             </div>
             <div class="mb-3">
                 <label for="confsenha" class="form-label">Confirmação senha</label>
-                <input type="password" class="form-control" id="confsenha" name="confsenha" required aria-describedby="confsenha confsenhaFeedback" onblur="verifica_senhas();">
+                <input type="password" class="form-control" id="confsenha" name="confsenha" required aria-describedby="confsenha confsenhaFeedback" onblur="verifica_senhas();"/>
                 <div id="confsenhaFeedback" class="invalid-feedback">
                     As senhas informadas não estão iguais.
                 </div>

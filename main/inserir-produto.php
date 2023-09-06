@@ -18,12 +18,12 @@ echo "<p>Descrição: $descricao";
 echo "<p>Link:<a href='$urlfoto' target='_blank'> $urlfoto</a>";
 
 /**
- *  INSERT INTO `produtos`(`id`, `nome`, `urlfoto`, `descricao`) 
+ *  INSERT INTO produtos(id, nome, urlfoto, descricao) 
  * VALUES ('[value-1]','[value-2]','[value-3]','[value-4]')
  * 
  */
 
-$sql = "INSERT INTO `produtos`(`nome`, `urlfoto`, `descricao`) VALUES (?,?,?)";
+$sql = "INSERT INTO produtos(nome, urlfoto, descricao) VALUES (?,?,?)";
 
 $stmt = $conn->prepare($sql);
 $result = $stmt->execute([$nome,$urlfoto,$descricao]);

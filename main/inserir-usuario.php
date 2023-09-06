@@ -18,7 +18,7 @@ echo "<p>Nome: $nome";
 echo "<p>Email: $email";
 
 /*
- *  INSERT INTO `produtos`(`id`, `nome`, `urlfoto`, `descricao`) 
+ *  INSERT INTO produtos(id, nome, urlfoto, descricao) 
  * VALUES ('[value-1]','[value-2]','[value-3]','[value-4]')
  * 
  */
@@ -26,7 +26,7 @@ echo "<p>Email: $email";
  /** 
   * Teste para saber se o email já existe no banco de dados
  */
-  $sql = "SELECT `id` FROM `usuarios` WHERE email = ?";
+  $sql = "SELECT     id FROM usuarios WHERE email = ?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$email]);
   $count = $stmt->rowCount();
@@ -42,7 +42,7 @@ echo "<p>Email: $email";
  }
 
 
-$insert = "INSERT INTO `usuarios`(`nome`, `email`, `senha`) VALUES (?,?,?)";
+$insert = "INSERT INTO usuarios(nome, email, senha) VALUES (?,?,?)";
 
 $stmt = $conn->prepare($insert);
 $result = $stmt->execute([$nome,$email,$senha_hash]);

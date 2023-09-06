@@ -10,7 +10,7 @@ require 'conexao.php';
 $email = filter_input(INPUT_POST,"email", FILTER_SANITIZE_EMAIL);
 $senha = filter_input(INPUT_POST, "senha", FILTER_SANITIZE_SPECIAL_CHARS);
 
-$sql = "SELECT `nome`,`senha`,`id` FROM `usuarios` WHERE email = ?";
+$sql = "SELECT nome,senha,id FROM usuarios WHERE email = ?";
 $stmt = $conn->prepare($sql);
 $stmt->execute([$email]);
 
