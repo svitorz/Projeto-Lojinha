@@ -1,20 +1,20 @@
-{
-    "deploy": {
-        "packages": [
-            {
-                "name": "Version 2.3.4",
-                "description": "Package version 2.3.4",
-                "deployOnSave": true
-            },
-        ],
-        "targets": [
-                {
-                    "type": "local",
-                    "name": "My local folder",
-                    "description": "A local folder",
+// {
+//     "deploy": {
+//         "packages": [
+//             {
+//                 "name": "Version 2.3.4",
+//                 "description": "Package version 2.3.4",
+//                 "deployOnSave": true
+//             },
+//         ],
+//         "targets": [
+//                 {
+//                     "type": "local",
+//                     "name": "My local folder",
+//                     "description": "A local folder",
     
-                    "dir": "C:\\xampp\\htdocs\\DWS-2"
-                },
-        ],
-    }
-}
+//                     "dir": "C:\\xampp\\htdocs\\DWS-2"
+//                 },
+//         ],
+//     }
+// }
