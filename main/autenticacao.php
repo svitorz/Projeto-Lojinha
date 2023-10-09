@@ -15,6 +15,9 @@ function nome_usuario(){
 function email_usuario(){
     return $_SESSION['email'];
 }
+function idUsuario(){
+    return $_SESSION['idUsuario'];
+}
 
 function redireciona($pagina = null){
     if(empty($pagina)){

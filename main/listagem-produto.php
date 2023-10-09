@@ -14,94 +14,60 @@ if (isset($_GET["ordem"]) && !empty($_GET["ordem"])) {
   $ordem = "nome";
 }
 
-// if (isset($busca) && !empty($busca)) {
-// $tipo_busca = filter_input(INPUT_POST, "tipo_busca", FILTER_SANITIZE_SPECIAL_CHARS);
-// $busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
+$tipo_busca = filter_input(INPUT_POST, "tipo_busca", FILTER_SANITIZE_SPECIAL_CHARS);
+$busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
+ if (isset($busca) && !empty($busca)) {
 
-//   if ($tipo_busca == "id") {
+   if ($tipo_busca == "id") {
 
-//     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE id = ? ORDER BY {$ordem}";
-//     $stmt = $conn->prepare($sql);
-//     $stmt->execute([$busca]);
+     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE id = ? ORDER BY {$ordem}";
+     $stmt = $conn->prepare($sql);
+     $stmt->execute([$busca]);
 
-//   } elseif ($tipo_busca == "nome") {
+   } elseif ($tipo_busca == "nome") {
 
-//     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE nome ilike ? ORDER BY {$ordem}";
-//     $busca_banco = "%" . $busca . "%";
-//     $busca_banco = str_replace(" ", "%", $busca_banco);
+     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE nome ilike ? ORDER BY {$ordem}";
+     $busca_banco = "%" . $busca . "%";
+     $busca_banco = str_replace(" ", "%", $busca_banco);
 
-//     $stmt = $conn->prepare($sql);
-//     $stmt->execute([$busca_banco]);
+     $stmt = $conn->prepare($sql);
+     $stmt->execute([$busca_banco]);
 
-//   } elseif ($tipo_busca == "descr") {
+   } elseif ($tipo_busca == "descr") {
 
-//     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE descricao ilike ? ORDER BY {$ordem}";
-//     $busca_banco = "%" . $busca . "%";
-//     $busca_banco = str_replace(" ", "%", $busca_banco);
+     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE descricao ilike ? ORDER BY {$ordem}";
+     $busca_banco = "%" . $busca . "%";
+     $busca_banco = str_replace(" ", "%", $busca_banco);
 
 
-//     $stmt = $conn->prepare($sql);
-//     $stmt->execute([$busca_banco]);
+     $stmt = $conn->prepare($sql);
+     $stmt->execute([$busca_banco]);
 
-//   } else {
+   } else {
 
-//     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos 
-//     WHERE descricao ilike ? 
-//       OR nome ilike ? 
-//         OR id = ? 
-//           ORDER BY {$ordem}";
+     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos 
+     WHERE descricao ilike ? 
+       OR nome ilike ? 
+         OR id = ? 
+           ORDER BY {$ordem}";
 
-//     $buscaInt = intval($busca);
-//     $busca_banco = "%" . $busca . "%";
-//     $busca_banco = str_replace(" ", "%", $busca_banco);
+     $buscaInt = intval($busca);
+     $busca_banco = "%" . $busca . "%";
+     $busca_banco = str_replace(" ", "%", $busca_banco);
 
-//     $stmt = $conn->prepare($sql);
-//     $stmt->execute([$busca_banco, $busca_banco, $buscaInt]);
+     $stmt = $conn->prepare($sql);
+     $stmt->execute([$busca_banco, $busca_banco, $buscaInt]);
 
-//   }
+   }
 
-// } else {
-//   $tipo_busca = null;
-//   $busca = null;
+ } else {
+   $tipo_busca = null;
+   $busca = null;
 
-//   $sql = "SELECT id,nome,urlfoto,descricao FROM produtos  ORDER BY {$ordem}";
-//   $stmt = $conn->query($sql);
+   $sql = "SELECT id,nome,urlfoto,descricao FROM produtos  ORDER BY {$ordem}";
+   $stmt = $conn->query($sql);
 
-// }
-//Tentando refazer a pesquisa utilizando switch/case
-
-if (isset($busca) && !empty($busca)) {
-  $tipo_busca = filter_input(INPUT_POST, "tipo_busca", FILTER_SANITIZE_SPECIAL_CHARS);
-  $busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
-
-  $where = null;
-  switch ($tipo_busca) {
-    case "id":
-      $where = "WHERE id = ?";
-    case "nome":
-      $where = "WHERE nome ilike ?";
-    case "descr":
-      $where = "WHERE descricao ilike ?";
-      break;
-    default:
-      $where = "WHERE descricao ilike ? OR nome ilike ? OR id = ?";
-  }
-  if (isset($where)) {
-    $sql = "SELECT id,nome,urlfoto,descricao FROM produtos {$where} ORDER BY {$ordem}";
-    $busca_banco = "%" . $busca . "%";
-    $busca_banco = str_replace(" ", "%", $busca_banco);
-    $buscaInt = intval($busca);
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$busca_banco, $busca_banco, $buscaInt]);
-  } 
-} else {
-  $tipo_busca = null;
-  $busca = null;
-  
-  $sql = "SELECT id,nome,urlfoto,descricao FROM produtos  ORDER BY {$ordem}";
-  $stmt = $conn->query($sql);
-}
-
+ }
 ?>
 <div class="row">
   <div class="col">

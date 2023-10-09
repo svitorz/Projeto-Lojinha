@@ -26,7 +26,7 @@ echo "<p>Email: $email";
  /** 
   * Teste para saber se o email já existe no banco de dados
  */
-  $sql = "SELECT     id FROM usuarios WHERE email = ?";
+  $sql = "SELECT id FROM usuarios WHERE email = ?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$email]);
   $count = $stmt->rowCount();
@@ -42,27 +42,11 @@ echo "<p>Email: $email";
  }
 
 
-$insert = "INSERT INTO usuarios(nome, email, senha) VALUES (?,?,?)";
-
-$stmt = $conn->prepare($insert);
-$result = $stmt->execute([$nome,$email,$senha_hash]);
-
-if($result == true){
-?>
-<div class="alert alert-success" role="alert">
-    <h4>Dados gravados com sucesso!</h4>
-</div>
-<?php
-}else {
-    $errorArray = $stmt->errorInfo();
-?>
-<div class="alert alert-danger" role="alert">
-    <h4>Erro ao gravar dados</h4>
-    <p><?= $errorArray[2]; ?></p>
-</div>
-<?php 
-}
-?>
-<?php
-require_once 'footer.php';
-?>            
+$insert = "INSERT INTO usuarios(nome, email, senha) VALUES (?,?,crypt(?, gen_salt('bf',8)))";
+    
+    try{
+        $stmt = $conn->prepare($insert);
+        $result = $stmt->execute([$nome,$email,$senha]);
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }

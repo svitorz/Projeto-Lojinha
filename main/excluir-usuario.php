@@ -14,29 +14,41 @@ require_once 'header.php';
 require 'conexao.php';
 
 $id = filter_input(INPUT_GET,"id", FILTER_SANITIZE_NUMBER_INT);
+if(idUsuario() != $id){
+    $_SESSION['erro'] = "Você não tem permissão para excluir este usuário!";
+    redireciona();
+    die();
+}
+
 /**
  *  DELETE FROM produtos WHERE 0
  * 
  */
 echo "<p class='fs-2'>Registro excluído: $id</p>";
 $sql = "DELETE FROM usuarios WHERE id = ?";
-
-$stmt = $conn->prepare($sql);
-$result = $stmt->execute([$id]);
-
-$count = $stmt->rowCount();
-
-if($result == true && $count >= 1){
-?>
+try{
+    $stmt = $conn->prepare($sql);
+    $result = $stmt->execute([$id]);
+    $count = $stmt->rowCount();
+    ?>
 <div class="alert alert-success" role="alert">
     <h4>Registro excluído com sucesso!</h4>
 </div>
 <?php
+} catch(Exception $e) {
+    echo $e->getMessage();
+}
+
+    
+
+if($result == true && $count >= 1){
+ redireciona("sair.php");
+ die();
 }elseif($count == 0){
-?>
-<div class="alert alert-warning" role="alert">
-    <h4>Nenhum registro encontrado com o id <?=$id?>!</h4>
-<?php 
+    $_SERVER["result"] = false;
+    $_SESSION['erro'] = "Não foi possível excluir o registro!";
+    redireciona("listagem-usuario.php");
+    die();
 }
 else{
     $errorArray = $stmt->errorInfo();    
@@ -49,7 +61,5 @@ else{
 }
 ?>
 <?php
-session_destroy();
-
 require_once 'footer.php';
 ?>            

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'logica.php';
+require 'autenticacao.php';
 
 if(!autenticado()){
   $_SESSION['restrito'] = true;
@@ -44,7 +44,7 @@ $stmt = $conn->query($sql);
           <td><?= $row["email"]?></td>  
           <td>
             <?php 
-            if($_SESSION['id'] == $row['id']){
+            if(idUsuario() == $row['id']){
             ?>
             <a href="excluir-usuario.php?id=<?=$row['id'];?>" onclick="if(!confirm('Deseja excluir?')) return false;" class=" btn btn-sm btn-danger">
               <span data-feather="trash-2"></span>

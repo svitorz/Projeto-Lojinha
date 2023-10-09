@@ -20,7 +20,7 @@ if(password_verify($senha, $row['senha'])){
     // Deu certo
     $_SESSION['email'] = $email;
     $_SESSION['nome'] = $row['nome'];
-    $_SESSION['id'] = $row['id'];
+    $_SESSION['idUsuario'] = $row['id'];
     ?>
 <div class="alert alert-success" role="alert">
     <h4>Autenticado com sucesso.</h4>
