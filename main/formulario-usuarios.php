@@ -57,5 +57,31 @@ require 'header.php';
     <button type="reset" class="btn btn-warning">Cancelar</button>
 </form>
 <?php
+ if(isset($_SESSION['result'])){
+    if($_SESSION['result']){
+?>
+<div class="alert alert-success">
+    <h4>Dados gravados com sucesso!</h4>
+    <p>
+        Clique aqui para fazer 
+        <a href="form-login.php">
+            se autenticar
+        </a>
+    </p>
+</div>
+<?php
+    }else{
+      $erro = $_SESSION['erro'];
+      unset($_SESSION['erro']);
+      ?>
+      <div class="alert alert-danger" role="alert">
+        <h4>Falha ao realizar gravação</h4>
+        <p><?php echo $erro; ?></p>
+      </div>
+    <?php
+    }
+    unset($_SESSION['result']);
+  }
+
 require 'footer.php';
 ?>

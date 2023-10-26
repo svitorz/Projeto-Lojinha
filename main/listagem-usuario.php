@@ -59,5 +59,20 @@ $stmt = $conn->query($sql);
     </tbody>
 </table>
 <?php
+
+        if(isset($_SESSION['result'])){
+            if(!$_SESSION['result']){
+
+              $erro = $_SESSION['erro'];
+              unset($_SESSION['erro']);
+              ?>
+              <div class="alert alert-danger" role="alert">
+                <h4>Falha ao realizar exclusão</h4>
+                <p><?php echo $erro; ?></p>
+              </div>
+            <?php
+            }
+            unset($_SESSION['result']);
+          }
 require_once 'footer.php';
 ?>            

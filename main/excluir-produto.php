@@ -2,16 +2,25 @@
 session_start();
 require 'autenticacao.php';
 
+if(!autenticado()){
+    header('location: login.php');
+    exit();
+}
+
 $titulo_pagina = "Página de exclusão de produtos";
 require_once 'header.php';
 
 require 'conexao.php';
 
 $id = filter_input(INPUT_GET,"id", FILTER_SANITIZE_NUMBER_INT);
-/**
- *  DELETE FROM produtos WHERE 0
- * 
- */
+
+if(idUsuario() != $id){
+    $_SESSION['result'] = false;
+    $_SESSION['erro'] = true;
+    redireciona('listagem-usuario.php');
+    exit();
+}
+
 echo "<p class='fs-2'>Registro excluído: $id</p>";
 $sql = "DELETE FROM produtos WHERE id = ?";
 

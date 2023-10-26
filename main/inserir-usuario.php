@@ -2,51 +2,30 @@
 session_start();
 require 'autenticacao.php';
 
-
-$titulo_pagina = "Página de inserção de produtos inserção de dados";
-require_once 'header.php';
-
 require 'conexao.php';
 
 $nome = filter_input(INPUT_POST,"nome", FILTER_SANITIZE_SPECIAL_CHARS);
 $email = filter_input(INPUT_POST,"email", FILTER_SANITIZE_EMAIL);
 $senha = filter_input(INPUT_POST,"senha");
 
-$senha_hash = password_hash($senha, PASSWORD_BCRYPT);
-
-echo "<p>Nome: $nome";
-echo "<p>Email: $email";
-
-/*
- *  INSERT INTO produtos(id, nome, urlfoto, descricao) 
- * VALUES ('[value-1]','[value-2]','[value-3]','[value-4]')
- * 
- */
-
- /** 
-  * Teste para saber se o email já existe no banco de dados
- */
-  $sql = "SELECT id FROM usuarios WHERE email = ?";
-  $stmt = $conn->prepare($sql);
-  $stmt->execute([$email]);
-  $count = $stmt->rowCount();
- 
-   if($count >= 1){
-     ?>
-     <div class="alert alert-danger" role="alert">
-         <h4>Erro ao gravar dados</h4>
-         <p>Email já cadastrado!</p>
-     </div>
-     <?php
-     die();
- }
-
-
 $insert = "INSERT INTO usuarios(nome, email, senha) VALUES (?,?,crypt(?, gen_salt('bf',8)))";
     
-    try{
-        $stmt = $conn->prepare($insert);
-        $result = $stmt->execute([$nome,$email,$senha]);
-    }catch(Exception $e){
-        echo $e->getMessage();
+try{
+    $stmt = $conn->prepare($insert);
+    $result = $stmt->execute([$nome,$email,$senha]);
+}catch(Exception $e){
+    $_SESSION['resut'] = false;
+    $erro = $e->getMessage();
     }
+
+    if($result == true){
+        $_SESSION['result'] = true;
+    }else{
+        if(stripos($erro,'duplicate key') != false){
+            $erro = "O erro <b>\"$email\"</b> já está registrado. <br><br> $erro";
+        }
+        $_SESSION['erro'] =  $erro;
+        $_SESSION['result'] = false;
+    }
+redireciona('formulario-usuarios.php');    
+?>
