@@ -9,6 +9,12 @@ if(!autenticado()){
   die();
 }
 
+require 'conexao.php';
+
+$sql = "SELECT id,nome FROM CATEGORIAS ORDER BY NOME";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
 $titulo_pagina = "Formulário de inserção de dados";
 require_once 'header.php';
 
@@ -24,9 +30,19 @@ if(!isset($_SESSION["email"])){
 <form action="inserir-produto.php" method="post">
 <div class="row">
     <div class="col-8">
-        <div class="mb-3">
-          <label for="nome" class="form-label">Nome do produto:</label>
-          <input type="text" class="form-control" name="nome" id="nome" required/>
+        <div class="mb-3 row">
+          <div class="col-md-8">
+            <label for="nome" class="form-label">Nome do produto:</label>
+            <input type="text" class="form-control" name="nome" id="nome" required/>
+          </div>
+          <div class="col-md-4">
+            <label for="select" class="form-label">Selecione</label>
+            <select class="form-select" name="categoria" id="categoria">
+              <?php while($row = $stmt->fetch()) { ?>
+              <option value="<?php echo $row['id']; ?>"><?php echo $row['nome']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
         </div>
         <div class="mb-3">
           <label for="descricao" class="form-label">Descrição do produto:</label>

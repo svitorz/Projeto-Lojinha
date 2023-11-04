@@ -8,6 +8,18 @@ function autenticado(){
     }
 }
 
+function tipo_usuario(){
+    return $_SESSION['tipo_user'];
+}   
+
+function isAdmin(){
+    if($_SESSION['tipo_user'] == 'admin'){
+        return true;
+    }else {
+        return false;
+    }
+}
+
 function nome_usuario(){
     return $_SESSION['nome'];
 }

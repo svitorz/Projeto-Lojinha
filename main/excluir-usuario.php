@@ -12,7 +12,7 @@ require 'conexao.php';
 
 $id = filter_input(INPUT_GET,"id", FILTER_SANITIZE_NUMBER_INT);
 
-if(idUsuario() != $id){
+if(idUsuario() != $id && !isAdmin()){
     $_SESSION['result'] = false;
     $_SESSION['erro'] = "Você não tem permissão para excluir este usuário!";
     redireciona('listagem-usuario.php');
@@ -29,8 +29,14 @@ try{
     echo $e->getMessage();
 }
 if($result == true && $count >= 1){
- redireciona("sair.php");
- die();
+
+    if (isAdmin()) {
+        redireciona('listagem-usuario.php');
+    }else{
+     redireciona("sair.php");
+    }
+
+    die();
 }elseif($count == 0){
     $_SERVER["result"] = false;
     $_SESSION['erro'] = "Não foi encontrado nenhum usuário com o ID ($id)";

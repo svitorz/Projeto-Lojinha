@@ -20,13 +20,15 @@ $busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
 
    if ($tipo_busca == "id") {
 
-     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE id = ? ORDER BY {$ordem}";
+     $sql = "SELECT produtos.*, categorias.nome AS nome_categoria FROM produtos INNER JOIN categorias ON categorias.id = produtos.id_categoria 
+     WHERE id = ? ORDER BY {$ordem}";
      $stmt = $conn->prepare($sql);
      $stmt->execute([$busca]);
 
    } elseif ($tipo_busca == "nome") {
 
-     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE nome ilike ? ORDER BY {$ordem}";
+     $sql = "SELECT produtos.*, categorias.nome AS nome_categoria FROM produtos INNER JOIN categorias ON categorias.id = produtos.id_categoria 
+     WHERE nome ilike ? ORDER BY {$ordem}";
      $busca_banco = "%" . $busca . "%";
      $busca_banco = str_replace(" ", "%", $busca_banco);
 
@@ -35,7 +37,8 @@ $busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
 
    } elseif ($tipo_busca == "descr") {
 
-     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos WHERE descricao ilike ? ORDER BY {$ordem}";
+     $sql = "SELECT produtos.*, categorias.nome AS nome_categoria FROM produtos INNER JOIN categorias ON categorias.id = produtos.id_categoria 
+     WHERE descricao ilike ? ORDER BY {$ordem}";
      $busca_banco = "%" . $busca . "%";
      $busca_banco = str_replace(" ", "%", $busca_banco);
 
@@ -64,7 +67,8 @@ $busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
    $tipo_busca = null;
    $busca = null;
 
-   $sql = "SELECT id,nome,urlfoto,descricao FROM produtos  ORDER BY {$ordem}";
+   $sql = "SELECT produtos.*, categorias.nome AS nome_categoria FROM produtos INNER JOIN categorias ON categorias.id = produtos.id_categoria 
+   ORDER BY {$ordem}";
    $stmt = $conn->query($sql);
 
  }
@@ -130,7 +134,7 @@ if (!empty($busca)) {
             ID
           </a>
         </th>
-        <th scope="col" style="width: 15%;">
+        <th scope="col" style="width: 20%;">
           Nome do Produto
           <span data-feather="chevron-down"></span>
         </th>
@@ -152,12 +156,13 @@ if (!empty($busca)) {
 
 
       <th scope="col" style="width: 25%;">Descrição</th>
+      <th scope="col" style="width: 25%;">Categoria</th>
       <th scope="col" style="width: 15%;">Link da imagem do produto</th>
       <?php
       if (autenticado()) {
         ?>
-        <th scope="col" style="width:20%;"></th>
-        <th scope="col" style="width:20%;"></th>
+        <th scope="col" style="width:5%;"></th>
+        <th scope="col" style="width:5%;"></th>
         <?php
       }
       ?>
@@ -178,15 +183,16 @@ if (!empty($busca)) {
           <?= $row["descricao"] ?>
         </td>
         <td>
+          <?= $row["nome_categoria"] ?>
+        </td>
+        <td>
           <a href="<?= $row["urlfoto"] ?>">
             LINK
           </a>
         </td>
         <td>
           <?php
-          if (autenticado()) {
-
-
+          if(autenticado() && isAdmin()){
             ?>
             <a href="excluir-produto.php?id=<?= $row['id']; ?>" onclick="if(!confirm('Deseja excluir?')) return false;"
               class=" btn btn-sm btn-danger">
@@ -194,6 +200,10 @@ if (!empty($busca)) {
               Excluir
             </a>
           </td>
+          <?php 
+          }
+          if(autenticado()){
+          ?>
           <td>
             <a href="editar-produto.php?id=<?= $row['id']; ?>" class="btn btn-sm btn-primary">
               <span data-feather="edit"></span>
@@ -202,7 +212,7 @@ if (!empty($busca)) {
           </td>
         </tr>
         <?php
-          }
+        }
     }
     ?>
   </tbody>

@@ -2,7 +2,7 @@
 session_start();
 require 'autenticacao.php';
 
-if(!autenticado()){
+if(!autenticado() || !isAdmin()){
     header('location: login.php');
     exit();
 }

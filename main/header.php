@@ -52,7 +52,10 @@
                     <a class="nav-link" href="index.php">Início</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="formulario.php">Formulário</a>
+                    <a class="nav-link" href="formulario-produto.php">Produtos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="formulario-categorias.php">Categorias</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="listagem-produto.php">Listagem de produtos</a>
@@ -81,7 +84,19 @@
                         Entrar
                     </a>
                 <?php    
-                } else { 
+                } else {
+                    if(isAdmin()){
+                        ?>
+                <span class="mx-2 btn-dark text-capitalize text-warning ">  
+                    <span data-feather="user"></span>
+                            #<?= nome_usuario() ?>
+                </span>
+                <a href="sair.php" class="btn btn-danger me-2">
+                    <span data-feather="log-out"></span>
+                    Sair
+                </a>
+                <?php
+                    }else {
                 ?>
                 <span class="mx-2 btn-dark text-capitalize">  
                     <span data-feather="user"></span>
@@ -92,6 +107,7 @@
                     Sair
                 </a>
                 <?php
+                    }
                  } 
                 ?>
             </div>
@@ -114,6 +130,12 @@
                             <a class="nav-link" aria-current="page" href="formulario-produto.php">
                                 <span data-feather="file-text"></span>
                                 Formulário
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="formulario-categorias.php">
+                                <span data-feather="file-text"></span>
+                                Categorias
                             </a>
                         </li>
                         <li class="nav-item">

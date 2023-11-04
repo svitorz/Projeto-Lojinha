@@ -14,7 +14,7 @@ try{
     $stmt = $conn->prepare($insert);
     $result = $stmt->execute([$nome,$email,$senha]);
 }catch(Exception $e){
-    $_SESSION['resut'] = false;
+    $_SESSION['result'] = false;
     $erro = $e->getMessage();
     }
 

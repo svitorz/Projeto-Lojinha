@@ -12,21 +12,18 @@ $id = filter_input(INPUT_POST,"id", FILTER_SANITIZE_NUMBER_INT);
 $nome = filter_input(INPUT_POST,"nome", FILTER_SANITIZE_SPECIAL_CHARS);
 $urlfoto = filter_input(INPUT_POST,"urlfoto", FILTER_SANITIZE_URL);
 $descricao = filter_input(INPUT_POST,"descricao", FILTER_SANITIZE_SPECIAL_CHARS);
+$categoria = filter_input(INPUT_POST,"categoria", FILTER_SANITIZE_NUMBER_INT);
 
-echo "<p>ID: $id";
-echo "<p>Nome: $nome";
-echo "<p>Descrição: $descricao";
-echo "<p>Link:<a href='$urlfoto' target='_blank'> $urlfoto</a>";
 
 /**
  *  UPDATE produtos SET id='[value-1]',nome='[value-2]',urlfoto='[value-3]',descricao='[value-4]' WHERE 1
  * 
  */
 
-$sql = "UPDATE produtos SET nome = ?, urlfoto = ?,descricao = ? WHERE id = ?";
+$sql = "UPDATE produtos SET nome = ?, urlfoto = ?,descricao = ?, id_categoria = ? WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
-$result = $stmt->execute([$nome,$urlfoto,$descricao,$id]);
+$result = $stmt->execute([$nome,$urlfoto,$descricao,$categoria,$id]);
 
 $count = $stmt->rowCount();
 

@@ -12,6 +12,7 @@ require 'conexao.php';
 $nome = filter_input(INPUT_POST,"nome", FILTER_SANITIZE_SPECIAL_CHARS);
 $urlfoto = filter_input(INPUT_POST,"urlfoto", FILTER_SANITIZE_URL);
 $descricao = filter_input(INPUT_POST,"descricao", FILTER_SANITIZE_SPECIAL_CHARS);
+$idCategoria = filter_input(INPUT_POST,"categoria", FILTER_SANITIZE_NUMBER_INT);
 
 echo "<p>Nome: $nome";
 echo "<p>Descrição: $descricao";
@@ -23,10 +24,10 @@ echo "<p>Link:<a href='$urlfoto' target='_blank'> $urlfoto</a>";
  * 
  */
 
-$sql = "INSERT INTO produtos(nome, urlfoto, descricao) VALUES (?,?,?)";
+$sql = "INSERT INTO produtos(nome, urlfoto, descricao, id_categoria) VALUES (?,?,?,?)";
 
 $stmt = $conn->prepare($sql);
-$result = $stmt->execute([$nome,$urlfoto,$descricao]);
+$result = $stmt->execute([$nome,$urlfoto,$descricao, $idCategoria]);
 
 if($result == true){
 ?>

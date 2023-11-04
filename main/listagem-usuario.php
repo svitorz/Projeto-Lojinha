@@ -15,7 +15,10 @@ require_once 'header.php';
 
 require 'conexao.php';
 
-$sql = "SELECT id,nome,email FROM usuarios ORDER BY nome";
+$sql = "SELECT id,nome,email,'usuario' AS tipo FROM usuarios 
+UNION 
+SELECT id as id_admin,nome,email, 'admin' AS tipo FROM administradores 
+ORDER BY nome";
 $stmt = $conn->query($sql);
 ?>
 
@@ -39,12 +42,23 @@ $stmt = $conn->query($sql);
       while($row = $stmt->fetch()){
       ?>
         <tr>
-          <th scope="row"> <?= $row["id"]?> </th>
-          <td><?= $row["nome"]?></td>
+          <th scope="row"> 
+            <?= $row["id"]; ?>
+          </th>
+          <td>
+            <?php 
+              if($row['tipo'] == 'admin'){
+                echo "<span class='text-danger'>#".$row["nome"]."</span>";
+              }else{
+                echo "<span>".$row["nome"]."</span>";
+              }
+            ?>
+          </td>
           <td><?= $row["email"]?></td>  
           <td>
             <?php 
-            if(idUsuario() == $row['id']){
+            if(idUsuario() == $row['id'] || isAdmin()){
+              if ($row['tipo'] != 'admin') {
             ?>
             <a href="excluir-usuario.php?id=<?=$row['id'];?>" onclick="if(!confirm('Deseja excluir?')) return false;" class=" btn btn-sm btn-danger">
               <span data-feather="trash-2"></span>
@@ -53,7 +67,8 @@ $stmt = $conn->query($sql);
           </td>
         </tr>
         <?php
-        }
+            } 
+          }
         }
         ?>
     </tbody>

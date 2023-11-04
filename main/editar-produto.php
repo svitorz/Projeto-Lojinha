@@ -5,7 +5,12 @@ require 'autenticacao.php';
 
 $titulo_pagina = "Formulário de inserção de dados";
 require_once 'header.php';
+
 require 'conexao.php';
+
+$sqlCat = "SELECT id,nome FROM CATEGORIAS ORDER BY NOME";
+$stmtCat = $conn->prepare($sqlCat);
+$stmtCat->execute();
 
 $id = filter_input(INPUT_GET,"id", FILTER_SANITIZE_NUMBER_INT);
 
@@ -19,7 +24,7 @@ if(empty($id)){
     exit;
 }
 
-$sql = "SELECT nome,urlfoto,descricao FROM produtos WHERE id = ?";
+$sql = "SELECT nome,urlfoto,descricao,id_categoria FROM produtos WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
 $result = $stmt->execute([$id]);
@@ -31,9 +36,24 @@ $rowProduto = $stmt->fetch();
     <input type="hidden" name="id" id="id" value="<?=$id;?>" />
 <div class="row">
     <div class="col-8">
-        <div class="mb-3">
-          <label for="nome" class="form-label">Nome do produto:</label>
-          <input type="text" class="form-control" name="nome" id="nome" value="<?=$rowProduto['nome']?>" required/>
+        <div class="mb-3 row">
+          <div class="col-md-8">
+            <label for="nome" class="form-label">Nome do produto:</label>
+            <input type="text" class="form-control" name="nome" id="nome" value="<?=$rowProduto['nome']?>" required /> 
+          </div>
+          <div class="col-md-4">
+            <label for="select" class="form-label">Selecione</label>
+            <select class="form-select" name="categoria" id="categoria">
+              <?php while($rowCat = $stmtCat->fetch()) {
+                if($rowProduto['id_categoria'] == $rowCat['id']){
+                  $selected = " selected ";
+                }else {
+                  $selected = null;
+                }?>
+              <option <?= $selected; ?> value="<?php echo $rowCat['id']; ?>"><?php echo $rowCat['nome']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
         </div>
         <div class="mb-3">
           <label for="descricao" class="form-label">Descrição do produto:</label>
