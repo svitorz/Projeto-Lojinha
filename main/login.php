@@ -24,7 +24,7 @@ try {
 $count = $stmt->rowCount();
 if ($count == 0 ) {
     //Verifica se existem usuarios
-        $sql = "SELECT nome,senha,id FROM usuarios WHERE email = ?";
+    $sql = "SELECT nome,senha,id FROM usuarios WHERE email = ?";
     try {
         //code...
         $stmt = $conn->prepare($sql);

@@ -8,8 +8,10 @@ if(autenticado()){
 }
 
 $titulo_pagina = "Identifique-se";
+
 require_once 'header.php';
 ?>
+
 <form action="login.php" method="post">
 <div class="row">
   <div class="col-4 offset-4">
@@ -25,24 +27,26 @@ require_once 'header.php';
     </div>
   </div>
 </form>
+
 <div class="row">
   <div class="col-4 offset-4">
     <?php 
       if(isset($_SESSION['result_login'])){
         if($_SESSION['result_login']){
-          
-          
+
         }else{
           $erro = $_SESSION['erro'];
           unset($_SESSION['erro']);
-          ?>
+    ?>
           <div class="alert alert-success">
             <h4>Falha ao realizar autenticação!</h4>
             <p>
-              echo $erro;
+              <?php 
+                echo $erro;
+              ?>
             </p>
           </div>
-          <?php
+    <?php
         }
         unset($_SESSION['result_login']);
       }
@@ -51,4 +55,4 @@ require_once 'header.php';
 </div>
 <?php
 require_once 'footer.php';
-?>            
+?>
