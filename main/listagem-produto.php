@@ -21,14 +21,14 @@ $busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
    if ($tipo_busca == "id") {
 
      $sql = "SELECT produtos.*, categorias.nome AS nome_categoria FROM produtos INNER JOIN categorias ON categorias.id = produtos.id_categoria 
-     WHERE id = ? ORDER BY {$ordem}";
+     WHERE produtos.id = ? ORDER BY {$ordem}";
      $stmt = $conn->prepare($sql);
      $stmt->execute([$busca]);
 
    } elseif ($tipo_busca == "nome") {
 
      $sql = "SELECT produtos.*, categorias.nome AS nome_categoria FROM produtos INNER JOIN categorias ON categorias.id = produtos.id_categoria 
-     WHERE nome ilike ? ORDER BY {$ordem}";
+     WHERE  produtos.nome ilike ? ORDER BY {$ordem}";
      $busca_banco = "%" . $busca . "%";
      $busca_banco = str_replace(" ", "%", $busca_banco);
 
@@ -38,7 +38,7 @@ $busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
    } elseif ($tipo_busca == "descr") {
 
      $sql = "SELECT produtos.*, categorias.nome AS nome_categoria FROM produtos INNER JOIN categorias ON categorias.id = produtos.id_categoria 
-     WHERE descricao ilike ? ORDER BY {$ordem}";
+     WHERE  produtos.descricao ilike ? ORDER BY {$ordem}";
      $busca_banco = "%" . $busca . "%";
      $busca_banco = str_replace(" ", "%", $busca_banco);
 
