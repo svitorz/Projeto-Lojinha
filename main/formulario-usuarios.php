@@ -8,7 +8,21 @@ $titulo_pagina = "Formulário de cadastro de usuário";
 require 'header.php';
 
 ?>
+<style>
+    #confirmar-senha{
+        visibility: hidden;
+    } 
+</style>
 <script>
+    window.myFunction = function(){
+        var senhaHasValue =document.getElementById("senha").value;
+        
+        if(!!senhaHasValue){
+            document.getElementById("confirmar-senha").style.visibility = "visible";
+        }else{
+            document.getElementById("confirmar-senha").style.visibility = "hidden";
+        };
+    };
 
     function verifica_senhas() {
         var senha = document.getElementById("senha");
@@ -31,17 +45,17 @@ require 'header.php';
         <div class="col-3">
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+                <input type="text" class="form-control" id="nome" name="nome" required />
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" required />
             </div>
             <div class="mb-3">
                 <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" required/>
+                <input type="password" class="form-control" id="senha" name="senha" onkeyup="myFunction()" required/>
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="confirmar-senha">
                 <label for="confsenha" class="form-label">Confirmação senha</label>
                 <input type="password" class="form-control" id="confsenha" name="confsenha" required aria-describedby="confsenha confsenhaFeedback" onblur="verifica_senhas();"/>
                 <div id="confsenhaFeedback" class="invalid-feedback">

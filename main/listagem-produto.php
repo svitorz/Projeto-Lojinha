@@ -48,10 +48,10 @@ $busca = filter_input(INPUT_POST, "busca", FILTER_SANITIZE_SPECIAL_CHARS);
 
    } else {
 
-     $sql = "SELECT id,nome,urlfoto,descricao FROM produtos 
-     WHERE descricao ilike ? 
-       OR nome ilike ? 
-         OR id = ? 
+     $sql = "SELECT PRODUTOS.*, CATEGORIAS.NOME AS NOME_CATEGORIA FROM produtos INNER JOIN CATEGORIAS ON CATEGORIAS.ID = PRODUTOS.ID_CATEGORIA 
+     WHERE PRODUTOS.descricao ilike ? 
+       OR PRODUTOS.nome ilike ? 
+         OR PRODUTOS.id = ? 
            ORDER BY {$ordem}";
 
      $buscaInt = intval($busca);
