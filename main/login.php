@@ -52,4 +52,6 @@ if(password_verify($senha, $row['senha'])){
     unset($_SESSION['nome']);
     unset($_SESSION['tipo_user']);
 }
+
+
 redireciona('form-login.php');

@@ -3,8 +3,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Lojinha</title>
-    <!-- Bootstrap core CSS -->
-    <link href="dist/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Bootstrap core CSS
+    <link href="dist/bootstrap.min.css" rel="stylesheet"/> -->
+    <!-- LINK BOOTSTRAP 5.3.0 via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -85,35 +87,31 @@
                     </a>
                 <?php    
                 } else {
-                    if(isAdmin()){
-                        ?>
-                <span class="mx-2 btn-dark text-capitalize text-warning ">  
-                    <span data-feather="user"></span>
-                            #<?= nome_usuario() ?>
-                </span>
+                    ?>
+                    <button class="btn mx-2 btn-dark text-capitalize <?php if(isAdmin()){echo 'text-warning'; }?>" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">  
+                        <span data-feather="user"></span>
+                        <?php if(isAdmin()){echo '#'; }?> <?= nome_usuario() ?>
+                    </button>
                 <a href="sair.php" class="btn btn-danger me-2">
                     <span data-feather="log-out"></span>
                     Sair
                 </a>
-                <?php
-                    }else {
-                ?>
-                <span class="mx-2 btn-dark text-capitalize">  
-                    <span data-feather="user"></span>
-                            <?= nome_usuario() ?>
-                </span>
-                <a href="sair.php" class="btn btn-danger me-2">
-                    <span data-feather="log-out"></span>
-                    Sair
-                </a>
-                <?php
-                    }
-                 } 
-                ?>
+                <?php } ?>
             </div>
         </div>
-
+        <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="staticBackdropLabel">Sessões</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div>
+              I will not close if you click outside of me.
+            </div>
+          </div>
+        </div>
     </header>
+
 
     <div class="container-fluid">
         <div class="row">
